@@ -96,7 +96,6 @@ async function onMessage(msg) {
       } else {
         await msg.say(`${gender}您好, 您发送的${text}暂时无法理解, 祝您春节快乐!`)
       }
-
     })
   }
 }
