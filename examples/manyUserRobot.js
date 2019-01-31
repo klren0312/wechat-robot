@@ -60,17 +60,6 @@ async function onMessage (msg) {
  * Main Contact Bot
  */
 async function main() {
-  const contactList = await bot.Contact.findAll()
-
-  /**
-   *  personal contact list
-   */
-  for (let i = 0; i < contactList.length; i++) {
-    const contact = contactList[i]
-    if (contact.type() === Contact.Type.Personal) {
-      log.info('Bot', `personal ${i}: ${contact.name()} : ${contact.id}`)
-    }
-  }
   setTimeout(function(){
     contactArr.forEach(async (v) => {
       const contact =  await bot.Contact.find({alias: v})
