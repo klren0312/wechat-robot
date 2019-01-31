@@ -2,7 +2,7 @@
 
 | FileName            | 描述 |
 | ---                 | ---         |
-| manyUserRobot.js | 群发机器人 | |
+| zzesRobot.js | 群发机器人 | |
 
 ## 2. 基本框架
 
