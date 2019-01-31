@@ -1,8 +1,5 @@
-const {
-  Contact,
-  log,
-  Wechaty
-} = require('wechaty')
+const { Wechaty } = require('wechaty')
+const schedule = require('node-schedule')
 const contactArr = require('./contactArr').contactArr
 // 定义
 const bot = new Wechaty({
@@ -37,18 +34,22 @@ function onScan (qrcode, status) {
   console.log(qrcodeImageUrl)
 }
 
+const timer = null
 function onLogin (user) {
-  console.log(`${user.name()} login`)
-  bot.say('Wechaty login').catch(console.error)
-  main()
+  console.log(`${user.name()} 登录成功`)
+  bot.say('机器人登录').catch(console.error)
+  const date = new Date(2019, 2, 5, 0, 0, 0)
+  timer = schedule.scheduleJob(date, function() {
+    main()
+  })
 }
 
 function onLogout (user) {
-  console.log(`${user.name()} logouted`)
+  console.log(`${user.name()} 退出登录`)
 }
 
 function onError (e) {
-  console.error('bot error:', e)
+  console.error('机器人报错:', e)
 }
 
 // get msg
@@ -63,8 +64,9 @@ async function main() {
   setTimeout(function(){
     contactArr.forEach(async (v) => {
       const contact =  await bot.Contact.find({alias: v})
-      await contact.say(`${v}, 怎么样, 加入治电, 投入学习吧!`)
+      await contact.say(`春节快乐! ${v} 新的一年, 继续加油!`)
     })
+    timer && timer.cancel()
   },6000);
   
 }
