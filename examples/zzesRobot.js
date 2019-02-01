@@ -5,6 +5,7 @@ const fly = require('flyio')
 const contactArr = require('./robot-config').contactArr
 const personArr = require('./robot-config').personArr
 const apiKey = require('./robot-config').apiKey
+const blessing = require('./robot-config').blessing
 
 // 定义
 const bot = new Wechaty({
@@ -110,7 +111,8 @@ async function main() {
       const contact = await bot.Contact.find({
         alias: v
       })
-      await contact.say(`春节快乐! 新的一年, ${v}继续加油!`)
+      const text = blessing(v)
+      await contact.say(`${text}`)
     })
     timer && timer.cancel()
   }, 6000);
