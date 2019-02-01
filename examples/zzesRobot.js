@@ -45,7 +45,8 @@ const timer = null
 function onLogin(user) {
   console.log(`${user.name()} 登录成功`)
   bot.say('机器人登录').catch(console.error)
-  const date = new Date(2019, 2, 5, 0, 0, 0)
+  // 月份是从0开始计算的
+  const date = new Date(2019, 1, 5, 0, 0, 0)
   timer = schedule.scheduleJob(date, function () {
     main()
   })
