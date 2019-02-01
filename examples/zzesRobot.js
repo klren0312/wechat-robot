@@ -4,6 +4,7 @@ const fly = require('flyio')
 
 const contactArr = require('./robot-config').contactArr
 const personArr = require('./robot-config').personArr
+const apiKey = require('./robot-config').apiKey
 
 // 定义
 const bot = new Wechaty({
@@ -62,7 +63,6 @@ function onError(e) {
 
 // get msg
 async function onMessage(msg) {
-  console.log(msg.toString())
   const contact = msg.from()
   const text = msg.text()
   const room = msg.room()
@@ -83,7 +83,7 @@ async function onMessage(msg) {
     }
     fly.post(`http://api.ruyi.ai/v1/message`, {
       q: text,
-      app_key: '',
+      app_key: apiKey,
       user_id: contact.name()
     }).then(async res => {
       console.log(res.data.result)

@@ -9,3 +9,7 @@ const personArr = [
   '自己维护的自动回复白名单'
 ]
 exports.personArr = personArr
+
+// 海知智能key
+const apiKey = ''
+exports.apiKey = apiKey
