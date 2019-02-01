@@ -40,7 +40,7 @@ function onScan(qrcode, status) {
   console.log(qrcodeImageUrl)
 }
 
-const timer = null
+let timer = null
 
 function onLogin(user) {
   console.log(`${user.name()} 登录成功`)
