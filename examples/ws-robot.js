@@ -37,7 +37,9 @@ function onLogout(user) {
 }
 
 async function onMessage (msg) {
-  console.log(msg.toString())
+  wss.on('connection', function connection(ws) {
+    ws.send(msg.toString())
+  })
 }
 
 const bot = new Wechaty()
