@@ -10,45 +10,46 @@ server({port: 8889, public: 'public'}, [
 ])
 opn('http://localhost:8889');
 const wss = new WebSocket.Server({ port: 8888 });
-function onScan (qrcode, status) {
-  wss.on('connection', function connection(ws) {
+const bot = new Wechaty({
+  name: 'ws-zzes-wechat-bot'
+})
+wss.on('connection', function connection(ws) {
+  function onScan (qrcode, status) {
+    log(qrcode)
     require('qrcode-terminal').generate(qrcode, { small: true }, function(q) {
-      console.log(q)
-      ws.send(q)
+      log(q)
     })  // show qrcode on console
     const qrcodeImageUrl = [
       'https://api.qrserver.com/v1/create-qr-code/?data=',
       encodeURIComponent(qrcode),
     ].join('')
   
-    console.log(qrcodeImageUrl)
-  })
-}
-
-function onLogin (user) {
-  wss.on('connection', function connection(ws) {
-    ws.send(`${user} login`)
-  })
-  console.log(`${user} login`)
-}
-
-function onLogout(user) {
-  console.log(`${user} logout`)
-}
-
-async function onMessage (msg) {
-  wss.on('connection', function connection(ws) {
-    ws.send(msg.toString())
-  })
-}
-
-const bot = new Wechaty()
-
-bot.on('scan',    onScan)
-bot.on('login',   onLogin)
-bot.on('logout',  onLogout)
-bot.on('message', onMessage)
-
-bot.start()
-.then(() => console.log('Starter Bot Started.'))
-.catch(e => console.error(e))
+    log(qrcodeImageUrl)
+  }
+  
+  function onLogin (user) {
+    log(`${user} login`)
+  }
+  
+  function onLogout(user) {
+    log(`${user} logout`)
+  }
+  
+  async function onMessage (msg) {
+    log(msg.toString())
+  }
+  
+  bot.on('scan',    onScan)
+  bot.on('login',   onLogin)
+  bot.on('logout',  onLogout)
+  bot.on('message', onMessage)
+  
+  bot.start()
+  .then(() => log('Starter Bot Started.'))
+  .catch(e => console.error(e))
+  
+  function log (msg) {
+    console.log(msg)
+    ws.send(msg + '\n')
+  }
+})
